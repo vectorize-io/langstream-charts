@@ -1,6 +1,7 @@
 name: Charts CI and Release
 
 on:
+  workflow_dispatch: {}
   pull_request:
     branches:
       - main
