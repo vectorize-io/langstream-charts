@@ -156,11 +156,13 @@ deployer:
     initialDelaySeconds: 10
     timeoutSeconds: 5
     periodSeconds: 30
+    useHttp: true
   # -- Readiness probe settings
   readiness:
     initialDelaySeconds: 5
     periodSeconds: 5
     timeoutSeconds: 5
+    useHttp: true
   # -- Node selector settings
   nodeSelector: {}
   # -- Toleration settings
