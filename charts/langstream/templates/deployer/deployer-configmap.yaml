@@ -30,15 +30,20 @@ data:
 {{- end }}
 
 {{- range $key, $val := $.Values.deployer.app.config }}
-{{- if eq "codeStorage" $key }}
-{{- else if eq "clusterRuntime" $key }}
+{{- if or (eq $key "codeStorage") (eq $key "clusterRuntime") (eq $key "quarkus") }}
 {{- else }}
   {{- if kindIs "map" $val }}
-  DEPLOYER_{{ $key | replace "-" "" | replace "\"" "." | snakecase | upper | replace "." "_"  }}: |
+  DEPLOYER_{{ $key | replace "-" "" | replace "\"" "." | snakecase | upper | replace "." "_" }}: |
 {{ $val | toYaml | indent 4 }}
   {{- else }}
-  DEPLOYER_{{ $key | replace "-" "" | replace "\"" "." | snakecase | upper | replace "." "_"  }}: "{{- $val -}}"
+  DEPLOYER_{{ $key | replace "-" "" | replace "\"" "." | snakecase | upper | replace "." "_" }}: "{{- $val -}}"
   {{- end }}
+{{- end }}
+{{- end }}
+
+{{- with .Values.deployer.app.config.quarkus }}
+{{- range $k, $v := . }}
+  {{ $k }}: {{ $v | toString | quote }}
 {{- end }}
 {{- end }}
 
