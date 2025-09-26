@@ -232,6 +232,13 @@ deployer:
         tolerations: []
         nodeSelector: {}
         annotations: {}
+      quarkus:
+        # -- Quarkus configuration for the deployer
+        QUARKUS_KUBERNETES_CLIENT_REQUEST_TIMEOUT: "120000"
+        QUARKUS_KUBERNETES_CLIENT_CONNECTION_TIMEOUT: "10000"
+        QUARKUS_KUBERNETES_CLIENT_HTTP2_DISABLE: "true"
+        QUARKUS_VERTX_EVENT_LOOPS_POOL_SIZE: "8"
+        QUARKUS_VERTX_BLOCKED_THREAD_CHECK_INTERVAL: "20S"
 
 
 apiGateway:
