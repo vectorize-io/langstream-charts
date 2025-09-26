@@ -3,6 +3,16 @@ entries:
   langstream:
   - apiVersion: v2
     appVersion: 0.6.2
+    created: "2025-09-26T17:17:49.02309747Z"
+    description: Helm chart for LangStream
+    digest: 3fbf60f36468dc4b436a3bae92c9e6053e9c057513f76b151320f5d4841af87b
+    name: langstream
+    type: application
+    urls:
+    - https://github.com/vectorize-io/langstream-charts/releases/download/langstream-1.3.0/langstream-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v2
+    appVersion: 0.6.2
     created: "2025-09-19T00:41:01.602191876Z"
     description: Helm chart for LangStream
     digest: 37c4e05ccd09936db375a6fcabb42e1a04183c28f76c253e326ad312af5fa2f7
@@ -448,4 +458,4 @@ entries:
     urls:
     - https://github.com/LangStream/charts/releases/download/langstream-0.0.1-alpha/langstream-0.0.1-alpha.tgz
     version: 0.0.1-alpha
-generated: "2025-09-19T00:41:01.602742782Z"
+generated: "2025-09-26T17:17:49.023436983Z"
