@@ -50,11 +50,18 @@ controlPlane:
     requests:
        cpu: 0.25
        memory: 256Mi
+  # -- Startup probe. Unset = no startup probe (previous behaviour). When set, liveness
+  # and readiness only start once it passes, so a slow boot gets
+  # periodSeconds * failureThreshold to finish without the liveness probe killing it.
+  # e.g. {periodSeconds: 10, failureThreshold: 90} = 15 minutes.
+  startup: {}
   # -- Liveness probe settings
   liveness:
     initialDelaySeconds: 20
     timeoutSeconds: 5
     periodSeconds: 30
+    # -- Optional; unset = Kubernetes default (3)
+    failureThreshold: null
   # -- Readiness probe settings
   readiness:
     initialDelaySeconds: 10
