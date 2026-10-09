@@ -35,6 +35,15 @@ spec:
             - name: http
               containerPort: {{ .Values.controlPlane.service.port }}
               protocol: TCP
+          {{- with .Values.controlPlane.startup }}
+          startupProbe:
+            httpGet:
+              path: /management/health
+              port: http
+            periodSeconds: {{ .periodSeconds | default 10 }}
+            timeoutSeconds: {{ .timeoutSeconds | default 5 }}
+            failureThreshold: {{ .failureThreshold | default 30 }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /management/health
@@ -42,6 +51,9 @@ spec:
             initialDelaySeconds: {{ .Values.controlPlane.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.controlPlane.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.controlPlane.liveness.timeoutSeconds }}
+            {{- with .Values.controlPlane.liveness.failureThreshold }}
+            failureThreshold: {{ . }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /management/health
@@ -49,6 +61,9 @@ spec:
             initialDelaySeconds: {{ .Values.controlPlane.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.controlPlane.readiness.periodSeconds }}
             timeoutSeconds: {{ .Values.controlPlane.readiness.timeoutSeconds }}
+            {{- with .Values.controlPlane.readiness.failureThreshold }}
+            failureThreshold: {{ . }}
+            {{- end }}
           resources:
             {{- toYaml .Values.controlPlane.resources | nindent 12 }}
           env:

@@ -1,4 +1,3 @@
-
 images:
   # -- Tag for all the images
   tag: ""
@@ -8,7 +7,7 @@ controlPlane:
   replicaCount: 1
   image:
     # -- Repository for the image
-    repository:  ghcr.io/langstream/langstream-control-plane
+    repository: ghcr.io/langstream/langstream-control-plane
     # -- Pull policy for the image
     pullPolicy: IfNotPresent
     # -- Tag for the image. If set it overrides images.tag
@@ -48,13 +47,20 @@ controlPlane:
   # -- Resources for the pod
   resources:
     requests:
-       cpu: 0.25
-       memory: 256Mi
+      cpu: 0.25
+      memory: 256Mi
+  # -- Startup probe. Unset = no startup probe (previous behaviour). When set, liveness
+  # and readiness only start once it passes, so a slow boot gets
+  # periodSeconds * failureThreshold to finish without the liveness probe killing it.
+  # e.g. {periodSeconds: 10, failureThreshold: 90} = 15 minutes.
+  startup: {}
   # -- Liveness probe settings
   liveness:
     initialDelaySeconds: 20
     timeoutSeconds: 5
     periodSeconds: 30
+    # -- Optional; unset = Kubernetes default (3)
+    failureThreshold: null
   # -- Readiness probe settings
   readiness:
     initialDelaySeconds: 10
@@ -66,7 +72,7 @@ controlPlane:
   tolerations: []
   # -- Affinity settings
   affinity: {}
-  
+
   # -- Section related to the application
   app:
     # -- Application configuration. It must be in Spring application.properties format. e.g.: logging.level.ai.langstream.webservice: debug
@@ -75,7 +81,7 @@ controlPlane:
 
 client:
   # -- Number of replicas
-  replicaCount: 1  
+  replicaCount: 1
   image:
     # -- Repository for the image
     repository: ghcr.io/langstream/langstream-cli
@@ -103,7 +109,7 @@ client:
   # -- Affinity settings
   affinity: {}
   # -- Resources for the pod
-  resources: 
+  resources:
     requests:
       cpu: 0.25
       memory: 256Mi
@@ -188,21 +194,21 @@ deployer:
         maxInstanceUnits: 8
         # -- Max allocatable units for a single tenant
         defaultMaxTotalResourceUnitsPerTenant: 0
-        # -- Wheter to enable the liveness probe for the agent
+        # -- Wheter to enable the liveness probe for the agent
         enableLivenessProbe: true
-        # -- Liveness probe initial delay
+        # -- Liveness probe initial delay
         livenessProbeInitialDelaySeconds: 10
-        # -- Liveness probe period
+        # -- Liveness probe period
         livenessProbePeriodSeconds: 30
-        # -- Liveness probe timeout
+        # -- Liveness probe timeout
         livenessProbeTimeoutSeconds: 5
-        # -- Wheter to enable the readiness probe for the agent
+        # -- Wheter to enable the readiness probe for the agent
         enableReadinessProbe: true
-        # -- Readiness probe initial delay
+        # -- Readiness probe initial delay
         readinessProbeInitialDelaySeconds: 10
-        # -- Readiness probe period
+        # -- Readiness probe period
         readinessProbePeriodSeconds: 30
-        # -- Readiness probe timeout
+        # -- Readiness probe timeout
         readinessProbeTimeoutSeconds: 5
         # -- Storage class mapping between the disk 'type' and the Kubernetes storage class
         storageClassesMapping: {}
@@ -268,7 +274,7 @@ apiGateway:
     role:
       # -- Role name. This is a namespaced-role.
       name: "langstream-api-gateway"
-    
+
     roleBinding:
       # -- Role binding name. This is a namespaced-role-binding.
       name: "langstream-api-gateway-role-binding"
